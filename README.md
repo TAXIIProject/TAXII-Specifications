@@ -1,11 +1,13 @@
 specifications
 ==============
 
+A repository for the development of TAXII Specifications and associated documents.
+
 ## Overview 
 
 The TAXII-Specifications repository is a workspace for development of
-the TAXII Specifications. Final revisions are tagged here and published
-to the TAXII website (http://taxii.mitre.org/specifications/index.html).
+the TAXII Specifications and associated documents. Final revisions are 
+tagged here and published to the TAXII website (http://taxii.mitre.org/specifications/index.html).
 This GitHub repository is used to promote the openness of TAXII, showing
 all document revisions and open issues. 
 
