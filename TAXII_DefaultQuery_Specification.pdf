@@ -6,7 +6,7 @@
   <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# githubog: http://ogp.me/ns/fb/githubog#">
     <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>TAXII-Specifications/TAXII_XMLMessageBinding_Specification.pdf at 1.1rc1 · TAXIIProject/TAXII-Specifications</title>
+        <title>TAXII-Specifications/TAXII_DefaultQuery_Specification.pdf at 1.1rc1 · TAXIIProject/TAXII-Specifications</title>
     <link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="GitHub" />
     <link rel="fluid-icon" href="https://github.com/fluidicon.png" title="GitHub" />
     <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-114.png" />
@@ -15,7 +15,7 @@
     <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144.png" />
     <link rel="logo" type="image/svg" href="https://github-media-downloads.s3.amazonaws.com/github-logo.svg" />
     <meta property="og:image" content="https://github.global.ssl.fastly.net/images/modules/logos_page/Octocat.png">
-    <meta name="hostname" content="github-fe137-cp1-prd.iad.github.net">
+    <meta name="hostname" content="github-fe131-cp1-prd.iad.github.net">
     <meta name="ruby" content="ruby 2.1.0p0-github-tcmalloc (60139581e1) [x86_64-linux]">
     <link rel="assets" href="https://github.global.ssl.fastly.net/">
     <link rel="conduit-xhr" href="https://ghconduit.com:25035/">
@@ -26,7 +26,7 @@
     <meta name="msapplication-TileImage" content="/windows-tile.png" />
     <meta name="msapplication-TileColor" content="#ffffff" />
     <meta name="selected-link" value="repo_source" data-pjax-transient />
-    <meta content="collector.githubapp.com" name="octolytics-host" /><meta content="collector-cdn.github.com" name="octolytics-script-host" /><meta content="github" name="octolytics-app-id" /><meta content="81531F01:4A2C:2D3ABD2:52D53D59" name="octolytics-dimension-request_id" /><meta content="2951827" name="octolytics-actor-id" /><meta content="MarkDavidson" name="octolytics-actor-login" /><meta content="3a7c4b1334556521d3f92c599eb9ebb797e667c607bc29bc06fe4a58a3b8fd75" name="octolytics-actor-hash" />
+    <meta content="collector.githubapp.com" name="octolytics-host" /><meta content="collector-cdn.github.com" name="octolytics-script-host" /><meta content="github" name="octolytics-app-id" /><meta content="81531F01:4A2C:2D3A72D:52D53D56" name="octolytics-dimension-request_id" /><meta content="2951827" name="octolytics-actor-id" /><meta content="MarkDavidson" name="octolytics-actor-login" /><meta content="3a7c4b1334556521d3f92c599eb9ebb797e667c607bc29bc06fe4a58a3b8fd75" name="octolytics-actor-hash" />
     
 
     
@@ -46,7 +46,7 @@
       
       <meta http-equiv="x-pjax-version" content="0403908a839318db10ec88d4d7ac0e2e">
 
-        <link data-pjax-transient rel='permalink' href='/TAXIIProject/TAXII-Specifications/blob/ca6c1e2fb3d3910d15cffe4297335c235eabf8af/TAXII_XMLMessageBinding_Specification.pdf'>
+        <link data-pjax-transient rel='permalink' href='/TAXIIProject/TAXII-Specifications/blob/ca6c1e2fb3d3910d15cffe4297335c235eabf8af/TAXII_DefaultQuery_Specification.pdf'>
   <meta property="og:title" content="TAXII-Specifications"/>
   <meta property="og:type" content="githubog:gitrepository"/>
   <meta property="og:url" content="https://github.com/TAXIIProject/TAXII-Specifications"/>
@@ -499,7 +499,7 @@
           
 
 
-<!-- blob contrib key: blob_contributors:v21:ef9a61bf056871b07000d13c3287a018 -->
+<!-- blob contrib key: blob_contributors:v21:e612e02c96ebd37d312a4c4a221c9ab8 -->
 
 <p title="This is a placeholder element" class="js-history-link-replace hidden"></p>
 
@@ -549,7 +549,7 @@
 
             <div class="select-menu-item js-navigation-item ">
               <span class="select-menu-item-icon octicon octicon-check"></span>
-              <a href="/TAXIIProject/TAXII-Specifications/blob/master/TAXII_XMLMessageBinding_Specification.pdf"
+              <a href="/TAXIIProject/TAXII-Specifications/blob/master/TAXII_DefaultQuery_Specification.pdf"
                  data-name="master"
                  data-skip-pjax="true"
                  rel="nofollow"
@@ -566,7 +566,7 @@
             </div>
             <input type="hidden" name="name" id="name" class="js-new-item-value">
             <input type="hidden" name="branch" id="branch" value="1.1rc1" />
-            <input type="hidden" name="path" id="path" value="TAXII_XMLMessageBinding_Specification.pdf" />
+            <input type="hidden" name="path" id="path" value="TAXII_DefaultQuery_Specification.pdf" />
           </form> <!-- /.select-menu-item -->
 
       </div> <!-- /.select-menu-list -->
@@ -577,7 +577,7 @@
 
             <div class="select-menu-item js-navigation-item ">
               <span class="select-menu-item-icon octicon octicon-check"></span>
-              <a href="/TAXIIProject/TAXII-Specifications/tree/v1.0Draft1/TAXII_XMLMessageBinding_Specification.pdf"
+              <a href="/TAXIIProject/TAXII-Specifications/tree/v1.0Draft1/TAXII_DefaultQuery_Specification.pdf"
                  data-name="v1.0Draft1"
                  data-skip-pjax="true"
                  rel="nofollow"
@@ -586,7 +586,7 @@
             </div> <!-- /.select-menu-item -->
             <div class="select-menu-item js-navigation-item ">
               <span class="select-menu-item-icon octicon octicon-check"></span>
-              <a href="/TAXIIProject/TAXII-Specifications/tree/v1.0/TAXII_XMLMessageBinding_Specification.pdf"
+              <a href="/TAXIIProject/TAXII-Specifications/tree/v1.0/TAXII_DefaultQuery_Specification.pdf"
                  data-name="v1.0"
                  data-skip-pjax="true"
                  rel="nofollow"
@@ -595,7 +595,7 @@
             </div> <!-- /.select-menu-item -->
             <div class="select-menu-item js-navigation-item ">
               <span class="select-menu-item-icon octicon octicon-check"></span>
-              <a href="/TAXIIProject/TAXII-Specifications/tree/1.1rc1u1/TAXII_XMLMessageBinding_Specification.pdf"
+              <a href="/TAXIIProject/TAXII-Specifications/tree/1.1rc1u1/TAXII_DefaultQuery_Specification.pdf"
                  data-name="1.1rc1u1"
                  data-skip-pjax="true"
                  rel="nofollow"
@@ -604,7 +604,7 @@
             </div> <!-- /.select-menu-item -->
             <div class="select-menu-item js-navigation-item selected">
               <span class="select-menu-item-icon octicon octicon-check"></span>
-              <a href="/TAXIIProject/TAXII-Specifications/tree/1.1rc1/TAXII_XMLMessageBinding_Specification.pdf"
+              <a href="/TAXIIProject/TAXII-Specifications/tree/1.1rc1/TAXII_DefaultQuery_Specification.pdf"
                  data-name="1.1rc1"
                  data-skip-pjax="true"
                  rel="nofollow"
@@ -613,7 +613,7 @@
             </div> <!-- /.select-menu-item -->
             <div class="select-menu-item js-navigation-item ">
               <span class="select-menu-item-icon octicon octicon-check"></span>
-              <a href="/TAXIIProject/TAXII-Specifications/tree/1.1/TAXII_XMLMessageBinding_Specification.pdf"
+              <a href="/TAXIIProject/TAXII-Specifications/tree/1.1/TAXII_DefaultQuery_Specification.pdf"
                  data-name="1.1"
                  data-skip-pjax="true"
                  rel="nofollow"
@@ -622,7 +622,7 @@
             </div> <!-- /.select-menu-item -->
             <div class="select-menu-item js-navigation-item ">
               <span class="select-menu-item-icon octicon octicon-check"></span>
-              <a href="/TAXIIProject/TAXII-Specifications/tree/1.0draft1/TAXII_XMLMessageBinding_Specification.pdf"
+              <a href="/TAXIIProject/TAXII-Specifications/tree/1.0draft1/TAXII_DefaultQuery_Specification.pdf"
                  data-name="1.0draft1"
                  data-skip-pjax="true"
                  rel="nofollow"
@@ -631,7 +631,7 @@
             </div> <!-- /.select-menu-item -->
             <div class="select-menu-item js-navigation-item ">
               <span class="select-menu-item-icon octicon octicon-check"></span>
-              <a href="/TAXIIProject/TAXII-Specifications/tree/1.0/TAXII_XMLMessageBinding_Specification.pdf"
+              <a href="/TAXIIProject/TAXII-Specifications/tree/1.0/TAXII_DefaultQuery_Specification.pdf"
                  data-name="1.0"
                  data-skip-pjax="true"
                  rel="nofollow"
@@ -648,12 +648,12 @@
 </div> <!-- /.select-menu -->
 
   <div class="breadcrumb">
-    <span class='repo-root js-repo-root'><span itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="/TAXIIProject/TAXII-Specifications/tree/1.1rc1" data-branch="1.1rc1" data-direction="back" data-pjax="true" itemscope="url"><span itemprop="title">TAXII-Specifications</span></a></span></span><span class="separator"> / </span><strong class="final-path">TAXII_XMLMessageBinding_Specification.pdf</strong> <span class="js-zeroclipboard minibutton zeroclipboard-button" data-clipboard-text="TAXII_XMLMessageBinding_Specification.pdf" data-copied-hint="copied!" title="copy to clipboard"><span class="octicon octicon-clippy"></span></span>
+    <span class='repo-root js-repo-root'><span itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="/TAXIIProject/TAXII-Specifications/tree/1.1rc1" data-branch="1.1rc1" data-direction="back" data-pjax="true" itemscope="url"><span itemprop="title">TAXII-Specifications</span></a></span></span><span class="separator"> / </span><strong class="final-path">TAXII_DefaultQuery_Specification.pdf</strong> <span class="js-zeroclipboard minibutton zeroclipboard-button" data-clipboard-text="TAXII_DefaultQuery_Specification.pdf" data-copied-hint="copied!" title="copy to clipboard"><span class="octicon octicon-clippy"></span></span>
   </div>
 </div>
 
 
-  <div class="commit commit-loader file-history-tease js-deferred-content" data-url="/TAXIIProject/TAXII-Specifications/contributors/1.1rc1/TAXII_XMLMessageBinding_Specification.pdf">
+  <div class="commit commit-loader file-history-tease js-deferred-content" data-url="/TAXIIProject/TAXII-Specifications/contributors/1.1rc1/TAXII_DefaultQuery_Specification.pdf">
     Fetching contributors…
 
     <div class="participation">
@@ -668,12 +668,12 @@
       <div class="info">
         <span class="icon"><b class="octicon octicon-file-text"></b></span>
         <span class="mode" title="File Mode">file</span>
-        <span>956.54 kb</span>
+        <span>717.727 kb</span>
       </div>
       <div class="actions">
         <div class="button-group">
-          <a href="/TAXIIProject/TAXII-Specifications/raw/1.1rc1/TAXII_XMLMessageBinding_Specification.pdf" class="button minibutton " id="raw-url">Raw</a>
-          <a href="/TAXIIProject/TAXII-Specifications/commits/1.1rc1/TAXII_XMLMessageBinding_Specification.pdf" class="button minibutton " rel="nofollow">History</a>
+          <a href="/TAXIIProject/TAXII-Specifications/raw/1.1rc1/TAXII_DefaultQuery_Specification.pdf" class="button minibutton " id="raw-url">Raw</a>
+          <a href="/TAXIIProject/TAXII-Specifications/commits/1.1rc1/TAXII_DefaultQuery_Specification.pdf" class="button minibutton " rel="nofollow">History</a>
         </div><!-- /.button-group -->
           <a class="minibutton danger disabled empty-icon tooltipped leftwards" href="#"
              title="You must be on a branch to make or propose changes to this file">
@@ -684,7 +684,7 @@
     </div>
         <div class="blob-wrapper data type-text js-blob-data">
       <div class="image js-image">
-          <a href="/TAXIIProject/TAXII-Specifications/blob/1.1rc1/TAXII_XMLMessageBinding_Specification.pdf?raw=true">View Raw</a>
+          <a href="/TAXIIProject/TAXII-Specifications/blob/1.1rc1/TAXII_DefaultQuery_Specification.pdf?raw=true">View Raw</a>
       </div>
   </div>
 
@@ -726,7 +726,7 @@
     </a>
 
     <ul class="site-footer-links">
-      <li>&copy; 2014 <span title="0.12733s from github-fe137-cp1-prd.iad.github.net">GitHub</span>, Inc.</li>
+      <li>&copy; 2014 <span title="0.05317s from github-fe131-cp1-prd.iad.github.net">GitHub</span>, Inc.</li>
         <li><a href="/site/terms">Terms</a></li>
         <li><a href="/site/privacy">Privacy</a></li>
         <li><a href="/security">Security</a></li>
