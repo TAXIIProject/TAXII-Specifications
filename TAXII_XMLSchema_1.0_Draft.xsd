@@ -1,0 +1,783 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://taxii.mitre.org/messages/xml/1"
+    xmlns:stix="http://stix.mitre.org" xmlns:taxii="http://taxii.mitre.org/messages/xml/1"
+    targetNamespace="http://taxii.mitre.org/messages/xml/1" elementFormDefault="qualified"
+    version="1.0">
+    <xs:annotation>
+        <xs:appinfo>
+            <schema>TAXII XML Message Binding Schema</schema>
+            <version>1.0 Draft</version>
+            <date>11/13/2012</date>
+            <terms_of_use>Copyright (c) 2012, The MITRE Corporation. All rights reserved. The
+                contents of this file are subject to the terms of the TAXII License located at
+                http://taxii.mitre.org/about/termsofuse.html. See the TAXII License for the specific
+                language governing permissions and limitations for use of this schema. When
+                distributing copies of the TAXII XML Message Binding Schema, this license header
+                must be included.</terms_of_use>
+        </xs:appinfo>
+        <xs:documentation>XML schema associated with the TAXII XML Message Binding Specification.
+            Note that in case of conflict, the specification is considered
+            normative.</xs:documentation>
+    </xs:annotation>
+
+    <xs:import namespace="http://stix.mitre.org" schemaLocation="STIX.xsd">
+        <xs:annotation>
+            <xs:documentation>Needed for the STIX payloads</xs:documentation>
+        </xs:annotation>
+    </xs:import>
+
+    <!-- GLOBAL TYPES -->
+
+    <xs:complexType name="TAXII_Message_Type">
+        <xs:annotation>
+            <xs:documentation>The root of all TAXII messages. This is used to define header fields.
+                This will never be instantiated directly but the TAXII Message Body types all extend
+                this type.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="extended-headers" minOccurs="0" maxOccurs="1">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:any processContents="skip" minOccurs="0" maxOccurs="unbounded">
+                            <xs:annotation>
+                                <xs:documentation>For extension headers.</xs:documentation>
+                            </xs:annotation>
+                        </xs:any>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="message-id" type="taxii:GUID" use="required">
+            <xs:annotation>
+                <xs:documentation>Holds the message ID of this message. Uses a
+                    GUID.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="in-response-to" type="taxii:GUID" use="optional">
+            <xs:annotation>
+                <xs:documentation>If this message is responding to some other TAXII message, this
+                    field holds the original message's MessageID value.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:simpleType name="GUID">
+        <xs:annotation>
+            <xs:documentation>Type used by MessageID and InResponseTo fields, a
+                GUID.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string"> </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="TAXII_ErrorMessage_Type">
+        <xs:annotation>
+            <xs:documentation>Type used by TAXII Error Messages</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="TAXII_Message_Type">
+                <xs:sequence>
+                    <xs:element name="error-detail" minOccurs="0" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>Machine-readable information about this message. See
+                                the specification for details.</xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType mixed="true">
+                            <xs:simpleContent>
+                                <xs:extension base="xs:string"/>
+                            </xs:simpleContent>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="message" type="xs:string" minOccurs="0" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>An additional message intended for human
+                                consumption</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="error-type" use="required">
+                    <xs:simpleType>
+                        <xs:union memberTypes="taxii:errorTypeEnum xs:string">
+                            <xs:annotation>
+                                <xs:documentation>This identifies the type of error conveyed in this
+                                    message. Can either be one of the defined Error Types or a
+                                    user-defined value.</xs:documentation>
+                            </xs:annotation>
+                        </xs:union>
+                    </xs:simpleType>
+                </xs:attribute>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:simpleType name="errorTypeEnum">
+        <xs:annotation>
+            <xs:documentation>The defined TAXII error message types</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="BAD-MESSAGE">
+                <xs:annotation>
+                    <xs:documentation>Bad Message - TAXII Server could not interpret the
+                        message</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="UNSUPPORTED-SERVICE">
+                <xs:annotation>
+                    <xs:documentation>Unsupported Service - Requested service not
+                        supported</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="UNAUTHORIZED">
+                <xs:annotation>
+                    <xs:documentation>Unauthorized - Authentication required or
+                        incorrect</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="DENIED">
+                <xs:annotation>
+                    <xs:documentation>Denied - Rejected for reasons other than
+                        authentication</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="UNSUPPORTED-PROTOCOL">
+                <xs:annotation>
+                    <xs:documentation>Unsupported Protocol - Requested Protocol Binding not
+                        supported</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="UNSUPPORTED-MESSAGE">
+                <xs:annotation>
+                    <xs:documentation>Unsupported Message Binding - Requested Message Binding not
+                        supported</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="UNSUPPORTED-CONTENT">
+                <xs:annotation>
+                    <xs:documentation>Unsupported Content Binding - Requested Content Binding not
+                        supported</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="NOT-FOUND">
+                <xs:annotation>
+                    <xs:documentation>Not Found - Request was for an unknown
+                        target</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="UNRECOGNIZED-VALUE">
+                <xs:annotation>
+                    <xs:documentation>Unrecognized Field Value - Unable to interpret a field
+                        value</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PROTECTION-UNSUPPORTED">
+                <xs:annotation>
+                    <xs:documentation>Protection Unsupported - Unable to comply with requested
+                        encryption protections</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="FAILURE">
+                <xs:annotation>
+                    <xs:documentation>Failure - General indication of failure</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PENDING">
+                <xs:annotation>
+                    <xs:documentation>Pending - Unable to respond within current session but queued
+                        for later response</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="TAXII_DiscoveryRequest_Type">
+        <xs:annotation>
+            <xs:documentation>Request to a Discovery Service for a listing of
+                services.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="taxii:TAXII_Message_Type"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="TAXII_DiscoveryResponse_Type">
+        <xs:annotation>
+            <xs:documentation>Response to a Discovery Request. Contains 0 or more Service
+                records.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="taxii:TAXII_Message_Type">
+                <xs:sequence>
+                    <xs:element name="service-instance" minOccurs="0" maxOccurs="unbounded"
+                        type="taxii:serviceRecordType">
+                        <xs:annotation>
+                            <xs:documentation>Each instance holds one service
+                                record.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="serviceRecordType">
+        <xs:annotation>
+            <xs:documentation>Describes one TAXII service.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="protocol-binding" type="xs:string" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>The supported protocol, identified using a TAXII Protocol
+                        Binding Version ID string or some other string value denoting a non-standard
+                        protocols</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="message-binding" type="xs:string" minOccurs="1" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>One or more supported message bindings, identified using a
+                        TAXII Message Binding Version ID string or some other string value denoting
+                        a non-standard message binding.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="content-binding" type="xs:string" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>Required if protocol = INBOX, ignored otherwise. One or more
+                        supported content bindings and version, identified using the appropriate
+                        STIX Release Version ID(s)</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="service-address" type="xs:string" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>The address used to contact the identified service. Should be
+                        a valid address using the identified protocol binding.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="message" type="xs:string" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>A message with regard to the named service</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="service-type" type="taxii:serviceTypeEnum" use="required">
+            <xs:annotation>
+                <xs:documentation>The type of the service.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="available" type="xs:boolean" use="optional">
+            <xs:annotation>
+                <xs:documentation>True if the requester is known to be allowed to use the given
+                    service. False if the requester is not allowed or if the requester's access is
+                    unknown.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="service-version" type="xs:string" use="required">
+            <xs:annotation>
+                <xs:documentation>Identify the TAXII Services version that defines this
+                    service.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:simpleType name="serviceTypeEnum">
+        <xs:annotation>
+            <xs:documentation>The defined TAXII services</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="DISCOVERY">
+                <xs:annotation>
+                    <xs:documentation>Discovery Service</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="FEED-MANAGEMENT">
+                <xs:annotation>
+                    <xs:documentation>Feed Management Service</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="INBOX">
+                <xs:annotation>
+                    <xs:documentation>Inbox Service</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="POLL">
+                <xs:annotation>
+                    <xs:documentation>Poll Service</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="TAXII_FeedInformationRequest_Type">
+        <xs:annotation>
+            <xs:documentation>A request for information about offered feeds from a Feed Management
+                Service</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="taxii:TAXII_Message_Type"/>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="TAXII_FeedInformationResponse_Type">
+        <xs:annotation>
+            <xs:documentation>A response to a Feed Information Request. Contains 0 or more feed
+                records.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="taxii:TAXII_Message_Type">
+                <xs:sequence>
+                    <xs:element name="feed" minOccurs="0" maxOccurs="unbounded"
+                        type="taxii:feedRecordType">
+                        <xs:annotation>
+                            <xs:documentation>One element provided for each feed in the
+                                response</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="feedRecordType">
+        <xs:annotation>
+            <xs:documentation>A record for a data feed</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="description" type="xs:string" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>A prose description of this feed</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="delivery-method" type="xs:string" minOccurs="1" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>The method by which feed content can be delivered, identified
+                        using a TAXII Protocol Binding Version ID string or some other string value
+                        denoting a non-standard protocols</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="message-binding" type="xs:string" minOccurs="1" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>One or more message bindings by which feed content can be
+                        delivered, identified using a TAXII Message Binding Version ID string or
+                        some other string value denoting a non-standard message
+                        binding.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="content-binding" type="xs:string" minOccurs="1" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>One or more supported content bindings and version by which
+                        feed content can be expressed, identified using the appropriate STIX Release
+                        Version ID(s)</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="feed-name" type="xs:string" use="required">
+            <xs:annotation>
+                <xs:documentation>A locally unique name for this service.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="available" type="xs:boolean" use="optional">
+            <xs:annotation>
+                <xs:documentation>True if the requester is known to be allowed to access the given
+                    feed. False if the requester is not allowed or if the requester's access is
+                    unknown.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="TAXII_SubscriptionManagementRequest_Type">
+        <xs:annotation>
+            <xs:documentation>Request management of a feed subscription (including creation of a new
+                subscription)</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="taxii:TAXII_Message_Type">
+                <xs:sequence>
+                    <xs:element name="feed-name" type="xs:string" minOccurs="1" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>The feed whose subscription is being
+                                managed.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="action" type="taxii:feedActionEnum" minOccurs="1"
+                        maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>The action to take on this feed.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="subscription-id" type="xs:string" minOccurs="0" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>The subscription ID being managed</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="subscription" type="taxii:subscriptionRecordType"
+                        minOccurs="0" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>MUST be present for SUBSCRIBE and MODIFY actions and
+                                ignored for all other actions. Indicates the subscription details to
+                                be applied to a new or modified subscription.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:simpleType name="feedActionEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="SUBSCRIBE">
+                <xs:annotation>
+                    <xs:documentation>Create a new subscription.</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="UNSUBSCRIBE">
+                <xs:annotation>
+                    <xs:documentation>Delete an existing subscription.</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="PAUSE">
+                <xs:annotation>
+                    <xs:documentation>Pause delivery of an existing subscription without deleting
+                        it.</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="RESUME">
+                <xs:annotation>
+                    <xs:documentation>Resume deliver of a paused subscription.</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="MODIFY">
+                <xs:annotation>
+                    <xs:documentation>Change an existing subscription.</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="QUERY">
+                <xs:annotation>
+                    <xs:documentation>Ask about the requesters established subscriptions for this
+                        feed.</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="TAXII_SubscriptionManagementResponse_Type">
+        <xs:annotation>
+            <xs:documentation>Indicates a successful response to a Feed Management Request
+                message.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="taxii:TAXII_Message_Type">
+                <xs:sequence>
+                    <xs:element name="feed-name" type="xs:string" minOccurs="1" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>The feed whose subscription is being
+                                managed.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="message" type="xs:string" minOccurs="0" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>An additional message intended for human
+                                consumption</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="subscription" minOccurs="0" maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation>This element will appear exactly once for request
+                                actions other than QUERY. It may appear zero or more times in
+                                response to a QUERY action. Each instance of this element represents
+                                a subscription to the named feed.</xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                            <xs:complexContent>
+                                <xs:extension base="subscriptionRecordType">
+                                    <xs:attribute name="subscription-id" type="xs:string"
+                                        use="required">
+                                        <xs:annotation>
+                                            <xs:documentation>The ID assigned to the given
+                                                subscription</xs:documentation>
+                                        </xs:annotation>
+                                    </xs:attribute>
+                                </xs:extension>
+                            </xs:complexContent>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="TAXII_SubscriptionAlert_Type">
+        <xs:annotation>
+            <xs:documentation>Message used to alert a consumer as to changes in a
+                subscription.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="taxii:TAXII_Message_Type">
+                <xs:sequence>
+                    <xs:element name="feed-name" type="xs:string" minOccurs="1" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>The feed whose subscription is being
+                                managed.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="action" minOccurs="1" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>The action to take on this feed.</xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                            <xs:simpleContent>
+                                <xs:extension base="taxii:feedActionEnum">
+                                    <xs:attribute name="effective-time" type="xs:dateTime"
+                                        use="required">
+                                        <xs:annotation>
+                                            <xs:documentation>The time when the action will come
+                                                into effect.</xs:documentation>
+                                        </xs:annotation>
+                                    </xs:attribute>
+                                    <xs:attribute name="error-type" default="SUCCESS" use="optional">
+                                        <xs:simpleType>
+                                            <xs:union
+                                                memberTypes="taxii:errorTypeEnum xs:string taxii:successTypeEnum">
+                                                <xs:annotation>
+                                                  <xs:documentation>This identifies the type of
+                                                  error conveyed in this message. Can either be one
+                                                  of the defined Error Types or a user-defined
+                                                  value.</xs:documentation>
+                                                </xs:annotation>
+                                            </xs:union>
+                                        </xs:simpleType>
+                                    </xs:attribute>
+                                </xs:extension>
+                            </xs:simpleContent>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="subscription-id" type="xs:string" minOccurs="1" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>The subscription ID being managed</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="subscription" type="taxii:subscriptionRecordType"
+                        minOccurs="0" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>Present for SUBSCRIBE and MODIFY actions. Indicates
+                                the new delivery mechanisms of the subscription.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="message" type="xs:string" minOccurs="0" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>A message with regard to the named
+                                subscription</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:simpleType name="successTypeEnum">
+        <xs:annotation>
+            <xs:documentation>The defined TAXII error message types</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="SUCCESS">
+                <xs:annotation>
+                    <xs:documentation>Success - The action was successful</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="TAXII_PollRequest_Type">
+        <xs:annotation>
+            <xs:documentation>A request to Poll a data feed.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="taxii:TAXII_Message_Type">
+                <xs:sequence>
+                    <xs:element name="feed-name" type="xs:string" minOccurs="1" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>The feed to poll.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="begin-timestamp" type="xs:dateTime" minOccurs="0"
+                        maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>The earliest timestamp of content to
+                                retrieve</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="end-timestamp" type="xs:dateTime" minOccurs="0" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>The latest timestamp of content to
+                                retrieve</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:choice>
+                        <xs:element name="subscription-id" type="xs:string" minOccurs="1"
+                            maxOccurs="1">
+                            <xs:annotation>
+                                <xs:documentation>The subscription ID being
+                                    polled</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="content-binding" type="xs:string" minOccurs="1"
+                            maxOccurs="1">
+                            <xs:annotation>
+                                <xs:documentation>The content binding and version by which the
+                                    requester wants the poll content expressed, identified using the
+                                    appropriate STIX Release Version ID(s)</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:choice>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="TAXII_PollResponse_Type">
+        <xs:annotation>
+            <xs:documentation>Type for the Poll Response Messages</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="TAXII_Message_Type">
+                <xs:sequence>
+                    <xs:element name="begin-timestamp" type="xs:dateTime" minOccurs="0"
+                        maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>The earliest timestamp of content to
+                                retrieve</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="end-timestamp" type="xs:dateTime" minOccurs="1" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>The latest timestamp of content to
+                                retrieve</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="subscription-id" type="xs:string" minOccurs="0" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>The subscription ID being polled</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="message" type="xs:string" minOccurs="0" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>An additional message intended for human
+                                consumption</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="content-binding" type="xs:string" minOccurs="1" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>One or more supported content bindings and version by
+                                which feed content can be expressed, identified using the
+                                appropriate STIX Release Version ID(s)</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element ref="stix:STIX" minOccurs="0" maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation>Zero or more STIX document.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="TAXII_STIXMessage_Type">
+        <xs:annotation>
+            <xs:documentation>STIX content</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="TAXII_Message_Type">
+                <xs:sequence>
+                    <xs:element name="subscription-id" type="xs:string" minOccurs="0" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>The subcription from which this content was collected,
+                                if any.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="message" type="xs:string" minOccurs="0" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>An additional message intended for human
+                                consumption</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="content-binding" type="xs:string" minOccurs="1" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>One or more supported content bindings and version by
+                                which feed content can be expressed, identified using the
+                                appropriate STIX Release Version ID(s)</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element ref="stix:STIX" minOccurs="1" maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation>One or more STIX document.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="subscriptionRecordType">
+        <xs:annotation>
+            <xs:documentation>Records subscription parameters</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="protect" type="xs:boolean" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>True if the requester requires feed content be
+                        encrypted.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="delivery-method" type="xs:string" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>The method by which the requester wants feed content
+                        delivered, identified using a TAXII Protocol Binding Version ID string or
+                        some other string value denoting a non-standard protocols</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="message-binding" type="xs:string" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>The message binding by which the requester wants feed content
+                        delivered, identified using a TAXII Message Binding Version ID string or
+                        some other string value denoting a non-standard message
+                        binding.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="content-binding" type="xs:string" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>The content binding and version by which the requester wants
+                        feed content expressed, identified using the appropriate STIX Release
+                        Version ID(s)</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="send-to" type="xs:string" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>The address to which content will be pushed. May be empty if
+                        the delivery-method indicates polling only. This must be a valid address
+                        according to the given delivery-method.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- GLOBAL ELEMENTS -->
+    <xs:element name="TAXII_Message" abstract="true" type="taxii:TAXII_Message_Type">
+        <xs:annotation>
+            <xs:documentation>Abstract super-type of all message elements</xs:documentation>
+        </xs:annotation>
+    </xs:element>
+    <xs:element name="TAXII_DiscoveryRequest" type="taxii:TAXII_DiscoveryRequest_Type"
+        substitutionGroup="taxii:TAXII_Message"/>
+    <xs:element name="TAXII_DiscoveryResponse" type="taxii:TAXII_DiscoveryResponse_Type"
+        substitutionGroup="taxii:TAXII_Message"/>
+    <xs:element name="TAXII_ErrorMessage" type="taxii:TAXII_ErrorMessage_Type"
+        substitutionGroup="taxii:TAXII_Message"/>
+    <xs:element name="TAXII_FeedInformationRequest" type="taxii:TAXII_FeedInformationRequest_Type"
+        substitutionGroup="taxii:TAXII_Message"/>
+    <xs:element name="TAXII_FeedInformationResponse" type="taxii:TAXII_FeedInformationResponse_Type"
+        substitutionGroup="taxii:TAXII_Message"/>
+    <xs:element name="TAXII_SubscriptionManagementRequest"
+        type="taxii:TAXII_SubscriptionManagementRequest_Type"
+        substitutionGroup="taxii:TAXII_Message"/>
+    <xs:element name="TAXII_SubscriptionManagementResponse"
+        type="taxii:TAXII_SubscriptionManagementResponse_Type"
+        substitutionGroup="taxii:TAXII_Message"/>
+    <xs:element name="TAXII_SubscriptionAlert" type="taxii:TAXII_SubscriptionAlert_Type"
+        substitutionGroup="taxii:TAXII_Message"/>
+    <xs:element name="TAXII_PollRequest" type="taxii:TAXII_PollRequest_Type"
+        substitutionGroup="taxii:TAXII_Message"/>
+    <xs:element name="TAXII_PollResponse" type="taxii:TAXII_PollResponse_Type"
+        substitutionGroup="taxii:TAXII_Message"/>
+    <xs:element name="TAXII_STIXMessage" type="taxii:TAXII_STIXMessage_Type"
+        substitutionGroup="taxii:TAXII_Message"/>
+</xs:schema>
