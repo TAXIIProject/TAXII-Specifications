@@ -1,10 +1,9 @@
 specifications
 ==============
 
-Updated 12/31/2013
+Updated 1/14/2014
 
-Posted an update to the TAXII 1.1 release candidate. The update includes an 
-expanded section 2.2 of the XML binding, and expanded the description of all message exchanges in the Services spec to make normative requirements clearer. 
+This repository acts as an archive for TAXII Specifications.
 
 
 The latest official version of the TAXII Specifications can be found here: http://taxii.mitre.org/specifications/index.html
