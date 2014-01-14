@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://taxii.mitre.org/query/taxii_default_query-1"
+    xmlns:tdq="http://taxii.mitre.org/query/taxii_default_query-1">
+
+    <xs:complexType name="DefaultQueryType">
+        <xs:sequence>
+            <xs:element name="Criteria" type="tdq:CriteriaType"/>
+        </xs:sequence>
+        <xs:attribute name="targeting_expression_id" type="xs:anyURI" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="DefaultQueryInformationType">
+        <xs:sequence>
+            <xs:element maxOccurs="unbounded" name="TargetingExpressionID" type="xs:anyURI"/>
+            <xs:element maxOccurs="unbounded" name="CapabilityModule" type="xs:anyURI"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="CriteriaType">
+        <xs:choice maxOccurs="unbounded">
+            <xs:element maxOccurs="1" minOccurs="1" name="Criteria" type="tdq:CriteriaType"/>
+            <xs:element maxOccurs="1" minOccurs="1" name="Criterion" type="tdq:CriterionType"/>
+        </xs:choice>
+        <xs:attribute name="operator" use="required">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:pattern value="OR"/>
+                    <xs:pattern value="AND"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="CriterionType">
+        <xs:sequence>
+            <xs:element name="Target" type="xs:string"/>
+            <xs:element name="Test" type="tdq:TestType"/>
+        </xs:sequence>
+        <xs:attribute default="false" name="negate" type="xs:boolean"/>
+    </xs:complexType>
+    <xs:complexType name="TestType">
+        <xs:sequence minOccurs="0">
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="Parameter"
+                type="tdq:ParameterType"/>
+        </xs:sequence>
+        <xs:attribute name="capability_id" type="xs:anyURI" use="required"/>
+        <xs:attribute name="relationship" type="xs:string" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="ParameterType">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="name" type="xs:string" use="required"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:element name="DefaultQuery" type="tdq:DefaultQueryType"/>
+    <xs:element name="DefaultQueryInformation" type="tdq:DefaultQueryInformationType"/>
+</xs:schema>
