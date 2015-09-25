@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
-    targetNamespace="http://taxii.mitre.org/query/taxii_default_query-1"
-    xmlns:tdq="http://taxii.mitre.org/query/taxii_default_query-1">
+    targetNamespace="http://docs.oasis-open.org/cti/ns/taxii/default-query-1.1.1"
+    xmlns:tdq="http://docs.oasis-open.org/cti/ns/taxii/default-query-1.1.1">
     <xs:annotation>
         <xs:appinfo>
             <schema>TAXII Default Query Schema</schema>
